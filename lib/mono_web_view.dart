@@ -115,12 +115,12 @@ class MonoWebViewState extends State<MonoWebView> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: true,
-      // onWillPop: () async {
-      //   if (widget.onClosed != null) widget.onClosed!();
-      //   return true;
-      // },
+    return WillPopScope(
+      // canPop: true,
+      onWillPop: () async {
+        if (widget.onClosed != null) widget.onClosed!('');
+        return true;
+      },
       child: Material(
         child: GestureDetector(
             onTap: () {
