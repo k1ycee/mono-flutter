@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:mono_flutter/extensions/num.dart'; 
+import 'package:mono_flutter/extensions/num.dart';
 
 import 'models/mono_event.dart';
 import 'models/mono_event_data.dart';
@@ -42,11 +42,12 @@ class MonoFlutter {
   ///  data is available.
   /// [paymentMode] set to true if you want to initiate a direct payment
   launch(BuildContext context, String key,
-      {String? reference, bool paymentMode = false,
+      {String? reference,
+      bool paymentMode = false,
       Map<String, dynamic>? config,
       String? reAuthCode,
       Function()? onLoad,
-      Function(String)? onClosed,
+      Function()? onClosed,
       Function(MonoEvent, MonoEventData)? onEvent,
       Function(String)? onSuccess}) {
     if (kIsWeb) {
@@ -54,7 +55,7 @@ class MonoFlutter {
         'key': key,
         'reference': reference ?? 15.getRandomString,
         'config': jsonEncode(config),
-        'authCode': reAuthCode, 
+        'authCode': reAuthCode,
         'paymentMode': paymentMode
       });
 
@@ -64,14 +65,7 @@ class MonoFlutter {
             if (onLoad != null) onLoad();
             return true;
           case 'onClose':
-          final args = (jsonDecode(call.arguments.toString())
-                    as Map<Object?, Object?>)
-                .map<String, Object?>((key, value) => MapEntry('$key', value));
-            if (onClosed != null) {
-                // ignore: avoid_print
-              print('PRINTING MONO CODE: ${args['code']}');
-              onClosed(args['code'].toString());
-            }
+            if (onClosed != null) onClosed();
             return true;
           case 'onSuccess':
             final args = (jsonDecode(call.arguments.toString())
@@ -118,5 +112,4 @@ class MonoFlutter {
           .then((code) => print(code));
     }
   }
- 
 }

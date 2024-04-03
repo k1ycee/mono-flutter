@@ -70,7 +70,7 @@ class MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           // if (kIsWeb) {
           MonoFlutter().launch(
-            context, 
+            context,
             'test_pk_qtys19MqGkmrkGk9RDjc',
             paymentMode: true,
             // reAuthCode: 'code_7ZSg9UB0sZsMSL3ygb6X',
@@ -84,8 +84,8 @@ class MyHomePageState extends State<MyHomePage> {
             onEvent: (event, data) {
               if (kDebugMode) print('event: $event, data: $data');
             },
-            onClosed: (code) {
-              if (kDebugMode) print('Modal closed $code');
+            onClosed: () {
+              if (kDebugMode) print('Modal closed ');
             },
             onLoad: () {
               if (kDebugMode) print('Mono loaded successfully');

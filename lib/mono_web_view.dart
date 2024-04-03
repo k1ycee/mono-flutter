@@ -23,7 +23,7 @@ class MonoWebView extends StatefulWidget {
   final Function(String code)? onSuccess;
 
   /// a function called when user clicks the close button on mono's page
-  final Function(String code)? onClosed;
+  final Function()? onClosed;
 
   /// a function called when the mono widget loads
   final Function()? onLoad;
@@ -51,7 +51,8 @@ class MonoWebView extends StatefulWidget {
       this.paymentUrl,
       this.reference,
       this.config,
-      this.reAuthCode = '', required this.paymentMode})
+      this.reAuthCode = '',
+      required this.paymentMode})
       : super(key: key);
 
   @override
@@ -118,7 +119,7 @@ class MonoWebViewState extends State<MonoWebView> {
     return WillPopScope(
       // canPop: true,
       onWillPop: () async {
-        if (widget.onClosed != null) widget.onClosed!('');
+        if (widget.onClosed != null) widget.onClosed!();
         return true;
       },
       child: Material(
@@ -213,11 +214,8 @@ class MonoWebViewState extends State<MonoWebView> {
           break;
         // case 'mono.connect.widget.closed':
         case 'mono.modal.closed':
-         var response = body['response'];
-          if (response == null) return;
-          var code = response['code'];
-          if (widget.onClosed != null) widget.onClosed!(code);
-          if (mounted) Navigator.of(context).pop(code);
+          if (widget.onClosed != null) widget.onClosed!();
+          if (mounted) Navigator.of(context).pop();
           break;
         case 'mono.modal.onLoad':
           if (mounted && widget.onLoad != null) widget.onLoad!();
