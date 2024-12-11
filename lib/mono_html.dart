@@ -19,7 +19,7 @@ class MonoHtml {
       <title>Mono Connect</title>
     </head>
     <body onload="setupMonoConnect()" style="background-color:#fff;height:100vh;overflow: scroll;">
-      <script src="https://connect.withmono.com/connect.js"></script>
+      <script src="https://connect.mono.co/v2/connect.js"></script>
       <script type="text/javascript">
         window.onload = setupMonoConnect;
         function setupMonoConnect() {
